@@ -29,6 +29,7 @@ function App() {
     type: CAMPAIGN_TYPES[0],
   });
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [shouldShowError, setShouldShowError] = useState(false);
 
   const handleFormUpdate = (name: string, value: string) => {
     setFormData({
@@ -41,6 +42,19 @@ function App() {
     handleFormUpdate("launchDate", date.toISOString());
     setIsDatePickerOpen(false);
   };
+
+  const handleSubmit = () => {
+    const { name, launchDate, description } = formData;
+    if (!name || !launchDate || !description) {
+      setShouldShowError(true);
+      return;
+    }
+  };
+
+  const isNameError = shouldShowError && !formData.name;
+  const isTypeError = shouldShowError && !formData.type;
+  const isLaunchError = shouldShowError && !formData.launchDate;
+  const isDescriptionError = shouldShowError && !formData.description;
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center bg-solitude min-h-screen min-w-screen">
@@ -56,7 +70,7 @@ function App() {
           Create your campaingn
         </Heading>
         <div className="flex flex-col sm:flex-row sm:flex-1 w-full">
-          <FormGroup label="Campaign Name" isInvalid={false}>
+          <FormGroup label="Campaign Name" isInvalid={isNameError}>
             <Input
               placeholder={"Campaign Name"}
               fontWeight={"600"}
@@ -65,7 +79,7 @@ function App() {
               onChange={(e) => handleFormUpdate(e.target.name, e.target.value)}
             />
           </FormGroup>
-          <FormGroup label="Campaign Type" isInvalid={false}>
+          <FormGroup label="Campaign Type" isInvalid={isTypeError}>
             <Select
               value={formData.type}
               name="type"
@@ -78,7 +92,7 @@ function App() {
           </FormGroup>
         </div>
         <div className="flex flex-col sm:flex-row sm:flex-1 w-full items-end">
-          <FormGroup label="Launch Date" isInvalid={false}>
+          <FormGroup label="Launch Date" isInvalid={isLaunchError}>
             <div className="relative">
               <div className="absolute">
                 {isDatePickerOpen ? (
@@ -93,7 +107,10 @@ function App() {
           </FormGroup>
         </div>
         <div className="flex flex-col sm:flex-row sm:flex-1 w-full items-end">
-          <FormGroup label="Campaign Description" isInvalid={false}>
+          <FormGroup
+            label="Campaign Description"
+            isInvalid={isDescriptionError}
+          >
             <Textarea
               placeholder={"Description"}
               fontWeight={"600"}
@@ -103,7 +120,11 @@ function App() {
             />
           </FormGroup>
         </div>
-        <Button colorScheme="blue" className="my-3 w-3/5">
+        <Button
+          colorScheme="blue"
+          className="my-3 w-3/5"
+          onClick={handleSubmit}
+        >
           Submit
         </Button>
       </Box>
