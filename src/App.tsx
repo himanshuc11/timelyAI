@@ -12,6 +12,7 @@ import Uploader from "./components/Uploader";
 import FormGroup from "./components/FormGroup";
 import DatePicker from "./components/DatePicker";
 import useInsertDB from "./hooks/useInsertDB";
+import useReadDB from "./hooks/useReadDB";
 import { CAMPAIGN_DATA, Campaign } from "./utils/types";
 
 type FormData = {
@@ -33,6 +34,7 @@ function App() {
   const [asset, setAsset] = useState<File | null>(null);
 
   const { insertIntoDB } = useInsertDB();
+  const data = useReadDB();
 
   const handleFormUpdate = (name: string, value: string) => {
     setFormData({

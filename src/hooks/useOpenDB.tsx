@@ -1,13 +1,9 @@
-import { useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { DB } from "../utils/constants";
 
 function useOpenDB() {
   const [db, setDB] = useState<IDBDatabase | null>(null);
-  const request = window.indexedDB.open(DB.NAME, DB.VERSION);
-
-  useEffect(() => {
-    return () => db?.close();
-  }, [db]);
+  const request = useMemo(() => window.indexedDB.open(DB.NAME, DB.VERSION), []);
 
   request.onerror = () =>
     alert("IndexDB needs to be allowed for this app to run");
