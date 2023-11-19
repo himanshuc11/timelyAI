@@ -2,9 +2,14 @@ import { FileUploader } from "react-drag-drop-files";
 
 const FILE_TYPES = ["JPG", "PNG", "GIF"];
 
-function Uploader() {
+type Props = {
+  setAsset: React.Dispatch<React.SetStateAction<File | null>>;
+  asset: File | null;
+};
+
+function Uploader(props: Props) {
   const handleChange = (file: File) => {
-    console.log(file);
+    props.setAsset(file);
   };
 
   return (
@@ -16,7 +21,9 @@ function Uploader() {
       classes="uploader"
     >
       <div className="border border-dashed border-purple py-2.5 px-3 rounded-lg flex justify-between cursor-pointer">
-        <p className="text-middle-blue text-sm">Drag & Drop</p>
+        <p className="text-middle-blue text-sm">
+          {props?.asset ? props.asset.name : "Drag & Drop"}
+        </p>
       </div>
     </FileUploader>
   );

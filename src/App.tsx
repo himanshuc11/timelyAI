@@ -11,8 +11,8 @@ import { CAMPAIGN_TYPES } from "./utils/constants";
 import Uploader from "./components/Uploader";
 import FormGroup from "./components/FormGroup";
 import DatePicker from "./components/DatePicker";
-
-type Campaign = (typeof CAMPAIGN_TYPES)[number];
+import useInsertDB from "./hooks/useInsertDB";
+import { CAMPAIGN_DATA, Campaign } from "./utils/types";
 
 type FormData = {
   name: "";
@@ -30,6 +30,9 @@ function App() {
   });
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [shouldShowError, setShouldShowError] = useState(false);
+  const [asset, setAsset] = useState<File | null>(null);
+
+  const { insertIntoDB } = useInsertDB();
 
   const handleFormUpdate = (name: string, value: string) => {
     setFormData({
@@ -49,6 +52,17 @@ function App() {
       setShouldShowError(true);
       return;
     }
+
+    const data: CAMPAIGN_DATA = {
+      name,
+      launchDate,
+      description,
+      type: formData.type,
+      asset: "BASE_64_ENCODED",
+      assetExtention: "png",
+    };
+
+    insertIntoDB(data);
   };
 
   const isNameError = shouldShowError && !formData.name;
@@ -86,7 +100,9 @@ function App() {
               onChange={(e) => handleFormUpdate(e.target.name, e.target.value)}
             >
               {CAMPAIGN_TYPES.map((campaignType) => (
-                <option value={campaignType}>{campaignType}</option>
+                <option value={campaignType} key={campaignType}>
+                  {campaignType}
+                </option>
               ))}
             </Select>
           </FormGroup>
@@ -103,7 +119,7 @@ function App() {
             </div>
           </FormGroup>
           <FormGroup label="Asset" isInvalid={false}>
-            <Uploader />
+            <Uploader asset={asset} setAsset={setAsset} />
           </FormGroup>
         </div>
         <div className="flex flex-col sm:flex-row sm:flex-1 w-full items-end">
