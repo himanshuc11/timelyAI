@@ -12,7 +12,6 @@ import Uploader from "./components/Uploader";
 import FormGroup from "./components/FormGroup";
 import DatePicker from "./components/DatePicker";
 import useInsertDB from "./hooks/useInsertDB";
-import useReadDB from "./hooks/useReadDB";
 import { CAMPAIGN_DATA, Campaign } from "./utils/types";
 
 type FormData = {
