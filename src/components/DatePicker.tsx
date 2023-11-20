@@ -2,6 +2,7 @@ import "react-day-picker/dist/style.css";
 import { Button } from "@chakra-ui/react";
 
 type Props = {
+  date?: Date | null;
   updateParent: (date: Date) => void;
 };
 
@@ -12,7 +13,9 @@ import { usePopper } from "react-popper";
 import { format } from "date-fns";
 
 export default function DatePickerDialog(props: Props) {
-  const [selected, setSelected] = useState<Date>();
+  const [selected, setSelected] = useState<Date>(
+    props?.date ? new Date(props.date) : new Date()
+  );
   const [isPopperOpen, setIsPopperOpen] = useState(false);
 
   const popperRef = useRef<HTMLDivElement>(null);
@@ -35,8 +38,8 @@ export default function DatePickerDialog(props: Props) {
   };
 
   const handleDaySelect: SelectSingleEventHandler = (date) => {
-    setSelected(date);
     if (date) {
+      setSelected(date);
       props.updateParent(date);
     }
     closePopper();
