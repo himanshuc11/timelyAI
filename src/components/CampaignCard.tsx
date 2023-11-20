@@ -10,16 +10,14 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import noResult from "../assets/no-results.png";
 import useDeleteDB from "../hooks/useDeleteDB";
 import format from "date-fns/format";
 import type { CAMPAIGN_DATA } from "../utils/types";
+import { generateImageFromBase64 } from "../utils/helpers";
 
 function CampaignCard(props: CAMPAIGN_DATA & { id: number }) {
   const { deleteRecordFromDB } = useDeleteDB();
-  const imgSrc = props?.asset
-    ? "data:image/png;base64," + props.asset
-    : noResult;
+  const imgSrc = generateImageFromBase64(props.asset);
   const navigate = useNavigate();
 
   const handleEditClick = (
@@ -46,7 +44,7 @@ function CampaignCard(props: CAMPAIGN_DATA & { id: number }) {
   return (
     <Card
       maxW="sm"
-      className="mb-5 h-80 cursor-pointer"
+      className="mb-5 h-72 cursor-pointer"
       onClick={handleCardClick}
     >
       <CardBody>
@@ -58,15 +56,17 @@ function CampaignCard(props: CAMPAIGN_DATA & { id: number }) {
           objectFit={"cover"}
         />
         <Stack mt="4" spacing="3">
-          <Heading size="md">{props.name}</Heading>
+          <Heading size="md">
+            {props.name}({props.type})
+          </Heading>
           <Text className="truncate max-h-10">{props.description}</Text>
-          <Text fontSize="lg">
+          <Text fontSize="sm">
             <time>{format(date, "dd MMMM yyyy")}</time>
           </Text>
         </Stack>
       </CardBody>
-      <CardFooter>
-        <ButtonGroup spacing="2" className="-mt-6">
+      <CardFooter className="-mt-6">
+        <ButtonGroup spacing="2">
           <Button
             variant="solid"
             colorScheme="blue"

@@ -1,5 +1,6 @@
 // @ts-ignore
 import imageToBase64 from "image-to-base64/browser";
+import noResult from "../assets/no-results.png";
 type AllowedExtentions = "png" | "jpg";
 
 type GeneretaeBase64 = {
@@ -29,4 +30,9 @@ async function generateBase64FromImage(
   };
 }
 
-export { generateBase64FromImage };
+function generateImageFromBase64(asset: string | undefined) {
+  const imgSrc = asset ? "data:image/png;base64," + asset : noResult;
+  return imgSrc;
+}
+
+export { generateBase64FromImage, generateImageFromBase64 };
