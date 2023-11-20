@@ -9,7 +9,8 @@ export default {
       solitude: "#F3F4F6",
       whiteLilac: "#FDF7FE",
       purple: '#3f3cbb',
-      newYorkBlue: "#6938EF"
+      newYorkBlue: "#6938EF",
+      lightBlue: "#ADD8E6"
     },
     extend: {},
   },
