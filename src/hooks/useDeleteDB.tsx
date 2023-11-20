@@ -1,8 +1,10 @@
 import { DB } from "../utils/constants";
+import { useNavigate } from "react-router-dom";
 import useOpenDB from "./useOpenDB";
 
-function useUpdateDB() {
+function useDeleteDB() {
   const { db } = useOpenDB();
+  const navigate = useNavigate();
 
   const storeInDB = (id: number) => {
     if (!db) throw new Error("No DB");
@@ -11,7 +13,7 @@ function useUpdateDB() {
     const record = table.delete(id);
 
     record.onsuccess = () => {
-      console.log("Success");
+      navigate(0);
     };
 
     transaction.oncomplete = () => db.close();
@@ -22,4 +24,4 @@ function useUpdateDB() {
   };
 }
 
-export default useUpdateDB;
+export default useDeleteDB;

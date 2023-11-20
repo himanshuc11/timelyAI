@@ -55,7 +55,6 @@ function CreateCampaign() {
     }
 
     const encodedFile = await generateBase64FromImage(asset);
-    console.log(encodedFile);
 
     const data: CAMPAIGN_DATA = {
       name,
