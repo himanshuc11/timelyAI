@@ -33,7 +33,7 @@ function CreateCampaign() {
   const [shouldShowError, setShouldShowError] = useState(false);
   const [asset, setAsset] = useState<File | null>(null);
 
-  //const { insertIntoDB } = useInsertDB();
+  const { insertIntoDB } = useInsertDB();
 
   const handleFormUpdate = (name: string, value: string) => {
     setFormData({
@@ -48,27 +48,25 @@ function CreateCampaign() {
   };
 
   const handleSubmit = async () => {
-    // const { name, launchDate, description } = formData;
-    // if (!name || !launchDate || !description) {
-    //   setShouldShowError(true);
-    //   return;
-    // }
+    const { name, launchDate, description } = formData;
+    if (!name || !launchDate || !description) {
+      setShouldShowError(true);
+      return;
+    }
 
     const encodedFile = await generateBase64FromImage(asset);
     console.log(encodedFile);
 
-    // const data: CAMPAIGN_DATA = {
-    //   name,
-    //   launchDate,
-    //   description,
-    //   type: formData.type,
-    //   asset: encodedFile.file,
-    //   assetExtention: encodedFile.type,
-    // };
+    const data: CAMPAIGN_DATA = {
+      name,
+      launchDate,
+      description,
+      type: formData.type,
+      asset: encodedFile.file,
+      assetExtention: encodedFile.type,
+    };
 
-    // console.log(data);
-
-    // insertIntoDB(data);
+    insertIntoDB(data);
   };
 
   const isNameError = shouldShowError && !formData.name;
