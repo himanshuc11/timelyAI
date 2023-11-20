@@ -12,6 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import noResult from "../assets/no-results.png";
 import useDeleteDB from "../hooks/useDeleteDB";
+import format from "date-fns/format";
 import type { CAMPAIGN_DATA } from "../utils/types";
 
 function CampaignCard(props: CAMPAIGN_DATA & { id: number }) {
@@ -40,6 +41,8 @@ function CampaignCard(props: CAMPAIGN_DATA & { id: number }) {
     deleteRecordFromDB(props.id);
   };
 
+  const date = new Date(props.launchDate);
+
   return (
     <Card
       maxW="sm"
@@ -52,13 +55,13 @@ function CampaignCard(props: CAMPAIGN_DATA & { id: number }) {
           alt="Green double couch with wooden legs"
           borderRadius="lg"
           className="w-full h-24"
-          objectFit={"contain"}
+          objectFit={"cover"}
         />
         <Stack mt="4" spacing="3">
           <Heading size="md">{props.name}</Heading>
-          <Text className="truncate h-10">{props.description}</Text>
-          <Text color="blue.600" fontSize="2xl">
-            <time>{props.launchDate}</time>
+          <Text className="truncate max-h-10">{props.description}</Text>
+          <Text fontSize="lg">
+            <time>{format(date, "dd MMMM yyyy")}</time>
           </Text>
         </Stack>
       </CardBody>
