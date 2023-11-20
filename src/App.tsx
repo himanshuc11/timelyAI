@@ -34,7 +34,6 @@ function App() {
   const [asset, setAsset] = useState<File | null>(null);
 
   const { insertIntoDB } = useInsertDB();
-  const data = useReadDB();
 
   const handleFormUpdate = (name: string, value: string) => {
     setFormData({
