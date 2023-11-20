@@ -10,28 +10,28 @@ import {
   Button,
 } from "@chakra-ui/react";
 import noResult from "../assets/no-results.png";
+import type { CAMPAIGN_DATA } from "../utils/types";
 
-function CampaignCard() {
+function CampaignCard(props: CAMPAIGN_DATA) {
+  const imgSrc = props?.asset
+    ? "data:image/png;base64," + props.asset
+    : noResult;
+
   return (
-    <Card maxW="sm">
+    <Card maxW="sm" className="mb-5">
       <CardBody>
         <Image
-          src={noResult}
+          src={imgSrc}
           alt="Green double couch with wooden legs"
           borderRadius="lg"
           className="w-full h-32"
           objectFit={"contain"}
         />
         <Stack mt="4" spacing="3">
-          <Heading size="md">Campaign Name</Heading>
-          <Text>
-            {/* Campaign Description */}
-            This sofa is perfect for modern tropical spaces, baroque inspired
-            spaces, earthy toned spaces and for people who love a chic design
-            with a sprinkle of vintage design.
-          </Text>
+          <Heading size="md">{props.name}</Heading>
+          <Text>{props.description}</Text>
           <Text color="blue.600" fontSize="2xl">
-            <time>Date and time</time>
+            <time>{props.launchDate}</time>
           </Text>
         </Stack>
       </CardBody>

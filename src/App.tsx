@@ -3,9 +3,10 @@ import Navbar from "./components/Navbar";
 
 function App() {
   return (
-    <div className="App">
+    <div className="h-full min-w-screen flex flex-col">
       <Navbar />
-      <main className="mt-10 sm:mt-0">
+      <div className="h-24 w-full pt-24" />
+      <main className="h-full w-full flex flex-col">
         <Outlet />
       </main>
     </div>

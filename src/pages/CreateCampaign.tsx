@@ -75,7 +75,7 @@ function CreateCampaign() {
   const isDescriptionError = shouldShowError && !formData.description;
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center bg-solitude min-h-screen min-w-screen">
+    <div className="flex flex-1 flex-col items-center justify-center bg-solitude h-full min-w-screen">
       <Box
         as="section"
         className="flex flex-col w-fit items-center border bg-whiteLilac rounded-lg mt-2 h-fit"
