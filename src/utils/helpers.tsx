@@ -26,7 +26,7 @@ async function generateBase64FromImage(
 
   return {
     file: base64Encoded,
-    type: extention,
+    type: name,
   };
 }
 
@@ -35,12 +35,15 @@ function generateImageFromBase64(asset: string | undefined) {
   return imgSrc;
 }
 
-async function generateFileFromBase64(asset: string | undefined) {
+async function generateFileFromBase64(
+  asset: string | undefined,
+  fileName: string
+) {
   const imgSrc = generateImageFromBase64(asset);
   const base64Response = await fetch(imgSrc);
   const blob: any = await base64Response.blob();
   blob.lastModifiedDate = new Date();
-  blob.name = "temp.png";
+  blob.name = fileName;
   return blob as File;
 }
 

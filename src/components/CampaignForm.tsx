@@ -11,7 +11,6 @@ import { CAMPAIGN_TYPES } from "../utils/constants";
 import Uploader from "../components/Uploader";
 import FormGroup from "../components/FormGroup";
 import DatePicker from "../components/DatePicker";
-import useInsertDB from "../hooks/useInsertDB";
 import {
   generateBase64FromImage,
   generateFileFromBase64,
@@ -27,7 +26,9 @@ type FormData = {
 
 type FinalFormData = FormData & {
   asset: string | null;
-  handleSubmit: () => void;
+  assetExtention: string;
+  handleSubmit: (data: CAMPAIGN_DATA) => void;
+  head: "Create" | "Edit";
 };
 
 type Props = FinalFormData | undefined;
@@ -37,18 +38,19 @@ function CampaignForm(props?: Props | undefined) {
     name: props?.name || "",
     description: props?.description || "",
     launchDate: props?.launchDate || "",
-    type: props?.name || CAMPAIGN_TYPES[0],
+    type: props?.type || CAMPAIGN_TYPES[0],
   });
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [shouldShowError, setShouldShowError] = useState(false);
   const [asset, setAsset] = useState<File | null>(null);
 
-  const { insertIntoDB } = useInsertDB();
-
   useEffect(() => {
     const getFile = async () => {
       if (props?.asset) {
-        const res = await generateFileFromBase64(props?.asset);
+        const res = await generateFileFromBase64(
+          props?.asset,
+          props?.assetExtention
+        );
         setAsset(res);
       }
     };
@@ -85,7 +87,7 @@ function CampaignForm(props?: Props | undefined) {
       assetExtention: encodedFile.type,
     };
 
-    insertIntoDB(data);
+    props?.handleSubmit(data);
   };
 
   const isNameError = shouldShowError && !formData.name;
@@ -104,7 +106,7 @@ function CampaignForm(props?: Props | undefined) {
         }}
       >
         <Heading as="h3" size="lg" className="m-2">
-          Create your campaingn
+          {props?.head} your campaingn
         </Heading>
         <div className="flex flex-col sm:flex-row sm:flex-1 w-full">
           <FormGroup label="Campaign Name" isInvalid={isNameError}>

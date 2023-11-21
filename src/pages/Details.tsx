@@ -59,7 +59,7 @@ function Details() {
         <Heading size="md">{data.name}</Heading>
         <Text>{data.type} Promotional Event</Text>
         <Text className="truncate max-h-10">{data.description}</Text>
-        <Text fontSize="md">
+        <Text fontSize="md" className="mb-2">
           <time>{format(date, "dd MMMM yyyy")}</time>
         </Text>
       </Stack>
@@ -83,9 +83,9 @@ function Details() {
           Delete
         </Button>
       </ButtonGroup>
-      <Text colorScheme="red" className="text-[#dc2626]">
+      <Text colorScheme="red" className="text-[#dc2626] mt-2">
         {disabled
-          ? "You cannot edit or delete campaigns that have already occured"
+          ? "You cannot edit or delete campaigns that are ongoing or have already occured"
           : ""}
       </Text>
     </div>
