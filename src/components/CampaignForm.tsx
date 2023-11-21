@@ -140,7 +140,11 @@ function CampaignForm(props?: Props | undefined) {
                 {isDatePickerOpen ? (
                   <DatePicker
                     updateParent={handleDate}
-                    date={formData?.launchDate ? formData.launchDate : null}
+                    date={
+                      formData?.launchDate
+                        ? new Date(formData.launchDate)
+                        : null
+                    }
                   />
                 ) : null}
               </div>
