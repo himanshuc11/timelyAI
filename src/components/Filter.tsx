@@ -28,15 +28,15 @@ function Filter() {
         <AccordionPanel pb={4}>
           <InputGroup>
             <InputLeftElement pointerEvents="none">
-              <SearchIcon color="black" />
+              <SearchIcon color="blue.500" />
             </InputLeftElement>
             <Input
               placeholder="Campaign Name"
               color={"black"}
               fontWeight={"600"}
+              borderColor="blue.500"
               style={{
-                borderWidth: "1px",
-                borderColor: "black",
+                borderWidth: "2px",
               }}
             />
           </InputGroup>

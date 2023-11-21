@@ -8,6 +8,7 @@ import {
   Stack,
   UseCheckboxProps,
 } from "@chakra-ui/react";
+import { CAMPAIGN_TYPES } from "../utils/constants";
 
 function CustomCheckbox(props: UseCheckboxProps | undefined) {
   const { state, getCheckboxProps, getInputProps, getLabelProps, htmlProps } =
@@ -19,10 +20,9 @@ function CustomCheckbox(props: UseCheckboxProps | undefined) {
       flexDirection="row"
       alignItems="center"
       gridColumnGap={2}
-      maxW="40"
-      bg="green.50"
+      bg="blue.50"
       border="1px solid"
-      borderColor="green.500"
+      borderColor="blue.500"
       rounded="lg"
       px={3}
       py={1}
@@ -34,15 +34,15 @@ function CustomCheckbox(props: UseCheckboxProps | undefined) {
         alignItems="center"
         justifyContent="center"
         border="2px solid"
-        borderColor="green.500"
+        borderColor="blue.500"
         w={4}
         h={4}
         {...getCheckboxProps()}
       >
-        {state.isChecked && <Box w={2} h={2} bg="green.500" />}
+        {state.isChecked && <Box w={2} h={2} bg="blue.500" />}
       </Flex>
-      <Text color="gray.700" {...getLabelProps()}>
-        Click me for {props?.value}
+      <Text color="black" {...getLabelProps()} fontWeight={"600"}>
+        Promotional Type {props?.value}
       </Text>
     </chakra.label>
   );
@@ -50,15 +50,18 @@ function CustomCheckbox(props: UseCheckboxProps | undefined) {
 
 function CheckboxGroup() {
   const { value, getCheckboxProps } = useCheckboxGroup({
-    defaultValue: ["2"],
+    defaultValue: [],
   });
 
   return (
-    <Stack>
-      <Text>The selected checkboxes are: {value.sort().join(" and ")}</Text>
-      <CustomCheckbox {...getCheckboxProps({ value: "1" })} />
-      <CustomCheckbox {...getCheckboxProps({ value: "2" })} />
-      <CustomCheckbox {...getCheckboxProps({ value: "3" })} />
+    <Stack className="mt-4">
+      <Text fontWeight={"600"}>Types to filter upon</Text>
+      {CAMPAIGN_TYPES.map((campaignType) => (
+        <CustomCheckbox
+          key={campaignType}
+          {...getCheckboxProps({ value: campaignType })}
+        />
+      ))}
     </Stack>
   );
 }
