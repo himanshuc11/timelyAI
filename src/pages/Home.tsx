@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Text } from "@chakra-ui/react";
 import { useCheckboxGroup } from "@chakra-ui/react";
 import CampaignCard from "../components/CampaignCard";
 import Filter from "../components/Filter";
@@ -48,18 +49,32 @@ function Home() {
     return filterByType;
   }, [data, searchText, value]);
 
+  if (data.length === 0) {
+    return (
+      <section className="h-full min-w-screen pt-6 px-6 ">
+        <Text fontWeight={"600"}>
+          Please Add campaign using the button in navbar
+        </Text>
+      </section>
+    );
+  }
+
   return (
-    <section className="h-full min-w-screen pt-6 px-6 ">
+    <section className="h-full min-w-screen pt-6 px-6">
       <search>
         <Filter
           setSearchText={setSearchText}
           getCheckboxProps={getCheckboxProps}
         />
       </search>
-      <div className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid">
-        {finalData?.map((cardData) => (
-          <CampaignCard {...cardData} key={cardData.id} />
-        ))}
+      <div className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid bg-solitude">
+        {finalData?.length > 0 ? (
+          finalData?.map((cardData) => (
+            <CampaignCard {...cardData} key={cardData.id} />
+          ))
+        ) : (
+          <Text fontWeight={"600"}>No Campaign Matches the given filters</Text>
+        )}
       </div>
     </section>
   );
