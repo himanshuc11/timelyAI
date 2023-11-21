@@ -18,9 +18,9 @@ import {
 import { CAMPAIGN_DATA, Campaign } from "../utils/types";
 
 type FormData = {
-  name: "";
-  description: "";
-  launchDate: "";
+  name: string;
+  description: string;
+  launchDate: string;
   type: Campaign;
 };
 

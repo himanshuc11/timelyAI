@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { CAMPAIGN_TYPES } from "../utils/constants";
+import { useNavigate } from "react-router-dom";
 import Uploader from "../components/Uploader";
 import FormGroup from "../components/FormGroup";
 import DatePicker from "../components/DatePicker";
@@ -16,9 +17,9 @@ import { generateBase64FromImage } from "../utils/helpers";
 import { CAMPAIGN_DATA, Campaign } from "../utils/types";
 
 type FormData = {
-  name: "";
-  description: "";
-  launchDate: "";
+  name: string;
+  description: string;
+  launchDate: string;
   type: Campaign;
 };
 
@@ -26,7 +27,7 @@ function CreateCampaign() {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     description: "",
-    launchDate: "",
+    launchDate: new Date().toISOString(),
     type: CAMPAIGN_TYPES[0],
   });
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
@@ -34,6 +35,7 @@ function CreateCampaign() {
   const [asset, setAsset] = useState<File | null>(null);
 
   const { insertIntoDB } = useInsertDB();
+  const navigate = useNavigate();
 
   const handleFormUpdate = (name: string, value: string) => {
     setFormData({
@@ -66,6 +68,7 @@ function CreateCampaign() {
     };
 
     insertIntoDB(data);
+    navigate("/");
   };
 
   const isNameError = shouldShowError && !formData.name;

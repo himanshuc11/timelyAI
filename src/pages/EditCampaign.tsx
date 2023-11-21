@@ -23,7 +23,6 @@ function EditCampaign() {
     return <h1>Loading...</h1>;
   }
 
-  // @ts-ignore
   return <CampaignForm {...data} head={"Edit"} handleSubmit={handleSubmit} />;
 }
 
