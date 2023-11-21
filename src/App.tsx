@@ -6,7 +6,7 @@ function App() {
     <div className="h-full min-w-screen flex flex-col">
       <Navbar />
       <div className="h-24 w-full pt-24" />
-      <main className="h-full w-full flex flex-col">
+      <main className="h-full w-full flex flex-col bg-solitude">
         <Outlet />
       </main>
     </div>

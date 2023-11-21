@@ -12,6 +12,7 @@ import format from "date-fns/format";
 import { useNavigate } from "react-router-dom";
 import useDeleteDB from "../hooks/useDeleteDB";
 import { generateImageFromBase64 } from "../utils/helpers";
+import { isBefore, isSameDay } from "date-fns";
 
 function Details() {
   const params = useParams();
@@ -43,8 +44,10 @@ function Details() {
   }
 
   const date = new Date(data.launchDate);
+  const disabled = isBefore(date, new Date()) || isSameDay(date, new Date());
+
   return (
-    <div className="flex flex-1 flex-col items-center justify-center bg-solitude h-full min-w-screen">
+    <div className="flex flex-1 flex-col h-full min-w-screen sm:max-w-md pt-10 mx-10">
       <Image
         src={imgSrc}
         alt="Green double couch with wooden legs"
@@ -54,8 +57,9 @@ function Details() {
       />
       <Stack mt="4" spacing="3">
         <Heading size="md">{data.name}</Heading>
+        <Text>{data.type} Promotional Event</Text>
         <Text className="truncate max-h-10">{data.description}</Text>
-        <Text fontSize="lg">
+        <Text fontSize="md">
           <time>{format(date, "dd MMMM yyyy")}</time>
         </Text>
       </Stack>
@@ -65,6 +69,7 @@ function Details() {
           colorScheme="blue"
           className="w-24"
           onClick={handleEditClick}
+          isDisabled={disabled}
         >
           Edit
         </Button>
@@ -73,10 +78,16 @@ function Details() {
           colorScheme="red"
           className="w-24"
           onClick={handleDeleteClick}
+          isDisabled={disabled}
         >
           Delete
         </Button>
       </ButtonGroup>
+      <Text colorScheme="red" className="text-[#dc2626]">
+        {disabled
+          ? "You cannot edit or delete campaigns that have already occured"
+          : ""}
+      </Text>
     </div>
   );
 }
