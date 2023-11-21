@@ -10,7 +10,8 @@ export default {
       whiteLilac: "#FDF7FE",
       purple: '#3f3cbb',
       newYorkBlue: "#6938EF",
-      lightBlue: "#ADD8E6"
+      lightBlue: "#ADD8E6",
+      lightPink: "#c9e9f6"
     },
     extend: {},
   },
