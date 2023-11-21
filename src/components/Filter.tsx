@@ -13,7 +13,15 @@ import {
 import { SearchIcon } from "@chakra-ui/icons";
 import CheckboxGroup from "./CheckboxGroup";
 
-function Filter() {
+type Props = {
+  setSearchText: React.Dispatch<React.SetStateAction<string>>;
+  getCheckboxProps: (props?: Record<string, any> | undefined) => {
+    [x: string]: any;
+    onChange: (eventOrValue: any) => void;
+  };
+};
+
+function Filter(props: Props) {
   return (
     <Accordion allowToggle>
       <AccordionItem className="bg-lightPink rounded-md mb-4">
@@ -38,9 +46,10 @@ function Filter() {
               style={{
                 borderWidth: "2px",
               }}
+              onChange={(e) => props.setSearchText(e.target.value)}
             />
           </InputGroup>
-          <CheckboxGroup />
+          <CheckboxGroup getCheckboxProps={props.getCheckboxProps} />
         </AccordionPanel>
       </AccordionItem>
     </Accordion>

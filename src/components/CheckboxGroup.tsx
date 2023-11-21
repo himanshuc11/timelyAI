@@ -4,11 +4,17 @@ import {
   Flex,
   Text,
   Box,
-  useCheckboxGroup,
   Stack,
   UseCheckboxProps,
 } from "@chakra-ui/react";
 import { CAMPAIGN_TYPES } from "../utils/constants";
+
+type Props = {
+  getCheckboxProps: (props?: Record<string, any> | undefined) => {
+    [x: string]: any;
+    onChange: (eventOrValue: any) => void;
+  };
+};
 
 function CustomCheckbox(props: UseCheckboxProps | undefined) {
   const { state, getCheckboxProps, getInputProps, getLabelProps, htmlProps } =
@@ -48,18 +54,14 @@ function CustomCheckbox(props: UseCheckboxProps | undefined) {
   );
 }
 
-function CheckboxGroup() {
-  const { value, getCheckboxProps } = useCheckboxGroup({
-    defaultValue: [],
-  });
-
+function CheckboxGroup(props: Props) {
   return (
     <Stack className="mt-4">
       <Text fontWeight={"600"}>Types to filter upon</Text>
       {CAMPAIGN_TYPES.map((campaignType) => (
         <CustomCheckbox
           key={campaignType}
-          {...getCheckboxProps({ value: campaignType })}
+          {...props.getCheckboxProps({ value: campaignType })}
         />
       ))}
     </Stack>
