@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import useDeleteDB from "../hooks/useDeleteDB";
-import format from "date-fns/format";
+import { format, isBefore, isSameDay } from "date-fns";
 import type { CAMPAIGN_DATA } from "../utils/types";
 import { generateImageFromBase64 } from "../utils/helpers";
 
@@ -40,11 +40,12 @@ function CampaignCard(props: CAMPAIGN_DATA & { id: number }) {
   };
 
   const date = new Date(props.launchDate);
+  const disabled = isBefore(date, new Date()) || isSameDay(date, new Date());
 
   return (
     <Card
       maxW="sm"
-      className="mb-5 h-72 cursor-pointer"
+      className="mb-5 h-76 cursor-pointer"
       onClick={handleCardClick}
     >
       <CardBody>
@@ -72,6 +73,7 @@ function CampaignCard(props: CAMPAIGN_DATA & { id: number }) {
             colorScheme="blue"
             className="w-24"
             onClick={handleEditClick}
+            isDisabled={disabled}
           >
             Edit
           </Button>
@@ -80,9 +82,13 @@ function CampaignCard(props: CAMPAIGN_DATA & { id: number }) {
             colorScheme="red"
             className="w-24"
             onClick={handleDeleteClick}
+            isDisabled={disabled}
           >
             Delete
           </Button>
+          <Text colorScheme="red" className="text-[#dc2626] mt-2 mx-auto">
+            {disabled ? "Campaign already occured" : ""}
+          </Text>
         </ButtonGroup>
       </CardFooter>
     </Card>
