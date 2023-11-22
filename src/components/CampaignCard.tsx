@@ -87,7 +87,7 @@ function CampaignCard(props: CAMPAIGN_DATA & { id: number }) {
             Delete
           </Button>
           <Text colorScheme="red" className="text-[#dc2626] mt-2 mx-auto">
-            {disabled ? "Campaign already occured" : ""}
+            {disabled ? "Campaign over" : ""}
           </Text>
         </ButtonGroup>
       </CardFooter>
